@@ -1,11 +1,9 @@
 import { Routes, Route, Link } from "react-router-dom";
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu } from 'antd';
 import {
   DesktopOutlined,
   PieChartOutlined,
-  FileOutlined,
-  TeamOutlined,
-  UserOutlined,
+  FileOutlined
 } from '@ant-design/icons';
 import "antd/dist/antd.css";
 
