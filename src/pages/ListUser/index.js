@@ -1,4 +1,4 @@
-import ListUsers from "../Component/body/ListUsers";
+import ListUsers from "../../Component/body/ListUsers";
 
 
 const Index = () => {

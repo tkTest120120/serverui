@@ -1,14 +1,20 @@
 import { useState, useEffect } from 'react';
 import { message, Table, Button, Space, Modal, Form, Input, Select } from 'antd';
+import { useSelector, useDispatch } from 'react-redux'
 
 import * as api from '../API/api';
+import { setModalUser } from '../../Redux/reducer';
 
 const { Option } = Select;
 
 const ListUsers = () => {
 
+  const state = useSelector((state) => state.fastFood);
+  const dispatch = useDispatch();
+  const form = Form.useForm();
+
+
   const [listUsers, setListUsers] = useState([]);
-  const [modalAddUser, setModalAddUser] = useState(false);
 
   useEffect(() => {
     handleGetAllUsers();
@@ -73,10 +79,24 @@ const ListUsers = () => {
     };
   });
 
+  const handleAddUser = (values) => {
+    console.log(values);
+    api.addUsers(values)
+    .then(res => {
+      if(res.data.addUser){
+        dispatch(setModalUser(state.isModalUser));
+      } else {
+        message.error(res.data.error);
+      }
+      
+    })
+    .catch( err => message.error(err));
+  };
+
   return (
     <div>
-      <Button type="primary" style={{ backgroundColor: "green", margin: "10px 0" }} onClick={() => setModalAddUser(modalAddUser ? false : true)} >Thêm User</Button>
-      <Modal title="Add User" visible={modalAddUser} onCancel={() => setModalAddUser(modalAddUser ? false : true)} footer={null}>
+      <Button type="primary" style={{ backgroundColor: "green", margin: "10px 0" }} onClick={() => dispatch(setModalUser(state.isModalUser))} >Thêm User</Button>
+      <Modal title="Add User" visible={state.isModalUser} onCancel={() => dispatch(setModalUser(state.isModalUser))} footer={null}>
 
         <Form
           name="basic"
@@ -95,6 +115,8 @@ const ListUsers = () => {
           }}
 
           autoComplete="off"
+          onFinish={handleAddUser}
+
         >
           <Form.Item
             label="Phone"
@@ -174,7 +196,7 @@ const ListUsers = () => {
             name="email"
 
           >
-            <Input type={"email"} />
+            <Input type={"email"} placeholder={"Input your Email "} value={""}/>
           </Form.Item>
 
           <Form.Item
@@ -184,7 +206,7 @@ const ListUsers = () => {
             <Input />
           </Form.Item>
 
-          <Form.Item name="sex" label="Sex" 
+          <Form.Item name="sex" label="Sex"
           // rules={[{ required: true }]}
           >
             <Select
@@ -228,7 +250,7 @@ const ListUsers = () => {
             label="BirthOfDate"
             name="birthOfDate"
           >
-            <Input />
+            <Input type={"date"}/>
           </Form.Item>
 
           {/* button submit */}

@@ -7,14 +7,21 @@ import {
 } from '@ant-design/icons';
 import "antd/dist/antd.css";
 
+import { useState , useEffect } from "react";
+
 import './App.css';
-import Index from "./pages";
-import { useState } from "react";
+import Index from "./pages/ListUser/index";
+import ListLoaiMon from "./pages/ListLoaiMon/ListLoaiMon";
 
 const { Header, Content, Footer, Sider } = Layout;
-const { SubMenu } = Menu;
+// const { SubMenu } = Menu;
 
 function App() {
+
+  useEffect(() => {
+    // document.querySelector("body > div.disclaimer").style.display = "none";
+  }, []);
+  
 
   const [test, setTest] = useState(false);
 
@@ -32,7 +39,7 @@ function App() {
               <Link to={"/"}>Home</Link>
             </Menu.Item>
             <Menu.Item key="2" icon={<DesktopOutlined />}>
-              <Link to={"/about"}>About</Link>
+              <Link to={"/loaiMon"}>Loại Món</Link>
             </Menu.Item>
 
             <Menu.Item key="9" icon={<FileOutlined />}>
@@ -52,14 +59,14 @@ function App() {
             <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
               <Routes>
                 <Route path="/" element={<Index />} />
-                <Route path="/about" element={<h1>about</h1>} />
+                <Route path="/about" element={<ListLoaiMon/>} />
               </Routes>
             </div>
 
 
           </Content>
 
-          <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+          <Footer style={{ textAlign: 'center' }}>Ant Design ©2022 Created by Ant UED</Footer>
 
         </Layout>
       </Layout>
